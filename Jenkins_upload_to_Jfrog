@@ -1,0 +1,38 @@
+pipeline {
+    agent {
+        label ''
+    }
+    triggers {
+        pollSCM ''
+    }
+    stages {
+        stage ('Deploy to Artifactory') {
+            steps {
+                rtServer (
+                    id: "ramankonatham123456",
+                    url: 'https://ramankonatham123456.jfrog.io/artifactory',
+                    credentialsId: 'bb6526cd-1d88-4c35-b6c8-6db1dbd1d215',
+                    bypassProxy: false,
+                    timeout: 300
+                )
+                
+                rtUpload (
+                    serverId: 'ramankonatham123456',
+                    spec: '''{
+                        "files": [
+                        {
+                            "pattern": "C:\\Users\\azuredevops\\.jenkins\\workspace\\Helpdesk\\HelpdeskMVC\\obj\\Debug\\Package\\HelpdeskMVC.zip",
+                            "target": "azuredevop-123"
+                        }
+                        ]
+                    }''',
+                    buildName: 'Helpdesk'
+                )
+                rtPublishBuildInfo (
+                    serverId: 'ramankonatham123456',
+                    buildName: 'Helpdesk'
+                )
+            }
+        }
+    }
+}
