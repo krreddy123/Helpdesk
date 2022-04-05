@@ -64,3 +64,19 @@ Upload Job:
     }
 }
 
+Save upload-job
+
+1. AzureDevOps-Release-Trigger:
+   ===========================
+2. Build Triggers --> Build after other projects are built --> upload-job
+3. Build:
+4. Execute shell:
+5. curl --location --request POST 'https://vsrm.dev.azure.com/<organisation name>/CAPA/_apis/release/releases?api-version=6.0' \
+--header 'Authorization: Basic cmFtYW5haWFoLmtvbmF0aGFtQG1tYWxpa2dzcGFubi5vbm1pY3Jvc29mdC5jb206cWprNnh0ZmpiY3BwNndtb2RweWg0dHpkaHpzc2I0MmZseHIzbGl1bHIzbGd0aWJ1enZ5YQ==' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "definitionId": 4,
+  "isDraft": false,
+  "reason": "none",
+  "manualEnvironments": null
+  }'
